@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI Voice Assistant — Demo</title>
+  <style>
+    :root {
+      --bg: #f3f4f6;
+      --card: #fff;
+      --accent: #2563eb
+    }
+
+    body {
+      font-family: Inter, system-ui, Arial;
+      margin: 0;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh
+    }
+
+    .card {
+      width: 980px;
+      max-width: 95%;
+      background: var(--card);
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(2, 6, 23, 0.08);
+      padding: 20px
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 20px
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      align-items: center
+    }
+
+    select,
+    input[type="text"] {
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #e6e9ee
+    }
+
+    button {
+      background: var(--accent);
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 0;
+      cursor: pointer
+    }
+
+    button.secondary {
+      background: #10b981
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 16px;
+      margin-top: 16px
+    }
+
+    .box {
+      background: #fbfdff;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid #eef2ff;
+      min-height: 160px
+    }
+
+    .transcript {
+      font-size: 16px;
+      color: #111;
+      min-height: 48px
+    }
+
+    .assistant {
+      white-space: pre-wrap;
+      color: #0f172a
+    }
+
+    .history {
+      max-height: 220px;
+      overflow: auto;
+      padding-right: 8px
+    }
+
+    .hist-item {
+      padding: 8px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      background: #f8fafc
+    }
+
+    small {
+      color: #6b7280
+    }
+
+    footer {
+      margin-top: 14px;
+      font-size: 12px;
+      color: #6b7280
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <header>
+      <div>
+        <h1>AI Voice Assistant (Demo)</h1>
+        <small>Speaks, understands, and performs simple actions via AI</small>
+      </div>
+      <div class="controls">
+        <select id="lang">
+          <option value="en-US">English (US)</option>
+          <option value="en-GB">English (UK)</option>
+          <option value="hi-IN">Hindi (India)</option>
+        </select>
+        <button id="toggleSpeak">Start Listening</button>
+        <button id="sendText" class="secondary">Send Text</button>
+      </div>
+    </header>
+
+    <div class="grid">
+      <div>
+        <div class="box">
+          <div><strong>Transcript</strong></div>
+          <p id="transcript" class="transcript"><em>No input yet — click "Start Listening"</em></p>
+
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <input id="manualInput" type="text" placeholder="Type a command (e.g., 'Search JavaScript tutorials')"
+              style="flex:1" />
+            <button id="manualSend">Send</button>
+          </div>
+
+          <div style="margin-top:12px">
+            <div><strong>Assistant Reply</strong></div>
+            <div id="assistantReply" class="assistant" style="margin-top:8px;min-height:48px"><em>Responses will appear
+                here.</em></div>
+          </div>
+        </div>
+      </div>
+
+      <aside>
+        <div class="box">
+          <div><strong>Action History</strong></div>
+          <div id="history" class="history" style="margin-top:8px"></div>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      Tip: Try commands like "Search latest web development tutorials", "Open YouTube", "Play relaxing music", or
+      "What's the weather in Mumbai?".
+    </footer>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  footer{margin-top:14px;font-size:12px;color:#6b7280}
+  </style>
+  </head>
+
+  <body>
+    <div class="card">
+      <header>
+        <div>
+          <h1>AI Voice Assistant (Demo)</h1>
+          <small>Speaks, understands, and performs simple actions via AI</small>
+        </div>
+        <div class="controls">
+          <select id="lang">
+            <option value="en-US">English (US)</option>
+            <option value="en-GB">English (UK)</option>
+            <option value="hi-IN">Hindi (India)</option>
+          </select>
+          <button id="toggleSpeak">Start Listening</button>
+          <button id="sendText" class="secondary">Send Text</button>
+        </div>
+      </header>
+
+      <div class="grid">
+        <div>
+          <div class="box">
+            <div><strong>Transcript</strong></div>
+            <p id="transcript" class="transcript"><em>No input yet — click "Start Listening"</em></p>
+
+            <div style="display:flex;gap:8px;margin-top:10px">
+              <input id="manualInput" type="text" placeholder="Type a command (e.g., 'Search JavaScript tutorials')"
+                style="flex:1" />
+              <button id="manualSend">Send</button>
+            </div>
+
+            <div style="margin-top:12px">
+              <div><strong>Assistant Reply</strong></div>
+              <div id="assistantReply" class="assistant" style="margin-top:8px;min-height:48px"><em>Responses will
+                  appear here.</em></div>
+            </div>
+          </div>
+        </div>
+
+        <aside>
+          <div class="box">
+            <div><strong>Action History</strong></div>
+            <div id="history" class="history" style="margin-top:8px"></div>
+          </div>
+        </aside>
+      </div>
+
+      <footer>
+        Tip: Try commands like "Search latest web development tutorials", "Open YouTube", "Play relaxing music", or
+        "What's the weather in Mumbai?".
+      </footer>
+    </div>
+
+    <script>
+      const toggleBtn = document.getElementById('toggleSpeak');
+      const transcriptEl = document.getElementById('transcript');
+      const assistantEl = document.getElementById('assistantReply');
+      const historyEl = document.getElementById('history');
+      const manualInput = document.getElementById('manualInput');
+      const manualSend = document.getElementById('manualSend');
+      const sendText = document.getElementById('sendText');
+      const langSelect = document.getElementById('lang');
+
+      let recognition = null;
+      let listening = false;
+
+      // Initialize Web Speech API
+      function initRecognition() {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+          recognition = null;
+          return;
+        }
+        recognition = new SpeechRecognition();
+        recognition.lang = langSelect.value || 'en-US';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        recognition.onresult = (e) => {
+          const text = e.results[0][0].transcript;
+          transcriptEl.textContent = text;
+          sendToAssistant(text);
+        };
+
+        recognition.onend = () => {
+          listening = false;
+          toggleBtn.textContent = 'Start Listening';
+        };
+
+        recognition.onerror = (err) => {
+          console.error('Recognition error', err);
+          listening = false;
+          toggleBtn.textContent = 'Start Listening';
+        };
+      }
+
+      initRecognition();
+
+      langSelect.addEventListener('change', () => {
+        if (recognition) {
+          recognition.lang = langSelect.value;
+        }
+      });
+
+      toggleBtn.addEventListener('click', () => {
+        if (!recognition) {
+          alert('Speech Recognition not supported in this browser (use Chrome/Edge).');
+          return;
+        }
+        if (listening) {
+          recognition.stop();
+          listening = false;
+          toggleBtn.textContent = 'Start Listening';
+        } else {
+          transcriptEl.textContent = '';
+          assistantEl.textContent = 'Listening...';
+          recognition.start();
+          listening = true;
+          toggleBtn.textContent = 'Stop Listening';
+        }
+      });
+
+      function speak(text) {
+        if (!('speechSynthesis' in window)) return;
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = langSelect.value || 'en-US';
+        window.speechSynthesis.speak(u);
+      }
+
+      function pushHistory(origin, text) {
+        const el = document.createElement('div');
+        el.className = 'hist-item';
+
+        const escapeHtml = (unsafe) => {
+          return String(unsafe)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+        };
+
+        el.innerHTML = `<small>${origin}</small><div>${escapeHtml(text)}</div>`;
+        historyEl.prepend(el);
+      }
+
+      async function sendToAssistant(text) {
+        if (!text || !text.trim()) return;
+        pushHistory('User', text);
+        assistantEl.textContent = 'Thinking...';
+
+        try {
+          const resp = await fetch('/api/assistant', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text })
+          });
+
+          if (!resp.ok) throw new Error(`Server returned ${resp.status}`);
+
+          const data = await resp.json();
+          const reply = data.reply || 'Sorry, I could not understand.';
+
+          // Update UI
+          assistantEl.textContent = reply;
+          pushHistory('Assistant', reply);
+          speak(reply);
+
+          if (data.action) {
+            handleAction(data.action);
+          }
+        } catch (err) {
+          console.error(err);
+          assistantEl.textContent = 'Error: could not reach assistant backend.';
+        }
+      }
+
+      function handleAction(action) {
+        const { type, payload } = action;
+        try {
+          if (type === 'search' && payload?.query) {
+            window.open(`https://www.google.com/search?q=${encodeURIComponent(payload.query)}`, '_blank');
+          } else if (type === 'open_url' && payload?.url) {
+            window.open(payload.url, '_blank');
+          } else if (type === 'play_music' && (payload?.url || payload?.query)) {
+            // If url provided use it, else search youtube
+            const target = payload.url || `https://www.youtube.com/results?search_query=${encodeURIComponent(payload.query)}`;
+            window.open(target, '_blank');
+          }
+        } catch (e) {
+          console.warn('Action error', e);
+        }
+      }
+
+      // Manual Input Handlers
+      const handleManualSend = () => {
+        const txt = manualInput.value.trim();
+        if (txt) {
+          transcriptEl.textContent = txt;
+          manualInput.value = '';
+          sendToAssistant(txt);
+        }
+      };
+
+      manualSend.addEventListener('click', handleManualSend);
+      manualInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') handleManualSend();
+      });
+
+      sendText.addEventListener('click', () => {
+        alert('Type a command in the input box below or use voice input.');
+        manualInput.focus();
+      });
+    </script>
+  </body>
+
+</html>
